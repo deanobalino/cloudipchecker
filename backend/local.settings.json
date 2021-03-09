@@ -1,8 +1,0 @@
-{
-  "IsEncrypted": false,
-  "Values": {
-    "AzureWebJobsStorage": "",
-    "FUNCTIONS_WORKER_RUNTIME": "custom",
-    "SUBSCRIPTION_ID": "8d3519e1-8089-4300-ab0b-bfeda0f9844c"
-  }
-}

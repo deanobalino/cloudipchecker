@@ -20,7 +20,7 @@ By default the API searches the downloaded [JSON file](https://www.microsoft.com
 
 If you wish to query to [Azure Service Tag API](https://docs.microsoft.com/en-us/rest/api/virtualnetwork/servicetags/list) instead, then you will need to change the URI, replacing `manual` with `api`
 
-An example URI for this is [https://cloudipchecker.azurewebsites.net/api/servicetags/api?ip=13.86.98.0](https://cloudipchecker.azurewebsites.net/api/servicetags/api?ip=13.86.98.0)
+An example URI for this is: [https://cloudipchecker.azurewebsites.net/api/servicetags/api?ip=13.86.98.0](https://cloudipchecker.azurewebsites.net/api/servicetags/api?ip=13.86.98.0)
 
 >The reason for this is that as the Service Tag API is in preview, it does not include as much data as the JSON that you can manually download. So you may get inconsistent or unexpected results there. Therefore, I built support for both. As the Service Tag API goes GA, I will change the default to be the API instead. 
 
@@ -61,7 +61,7 @@ Then it should be as simple as deploying to Azure. I recommend using the [Azure 
 Once deployed to Azure, you need to assign a Managed Identity to your Azure Functions with permissions to access to VNET Service Tag API. 
 
 #### Running Locally
-If you wish to test this locally, you will neither to either: 
+If you wish to test this locally, you will need to either: 
 
 1.  Create a Service Principal and add it to your local environment. This will require no changes to the code and is the preferred method. 
 2. Edit the **backend/apiservicetags/apiservicetags.go** file and change the Auth function to use the CLI. You will need the Azure CLI installed and authenticated for this. You can see the lines reference [here](https://github.com/deanobalino/cloudipchecker/blob/main/backend/apiservicetags/apiservicetags.go#L43-L44) with the CLI auth commented out. **You will need to change this back when you deploy to Azure as your function in the cloud will not have the CLI auth. It will use the environment.**

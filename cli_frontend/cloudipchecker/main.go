@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "cloudipchecker/cmd"
+import "github.com/deanobalino/cloudipchecker/cli_frontend/cloudipchecker/cmd"
 
 func main() {
 	cmd.Execute()

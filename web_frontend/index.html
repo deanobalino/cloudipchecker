@@ -1,0 +1,175 @@
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Cloud IP Checker</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.2.1/vue-router.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+  <script src="constants.js"></script>
+  <!-- <link rel="stylesheet" href="main.css"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css">
+</head>
+
+<body>
+
+  <div class="container">
+    <header class="page-header">
+      <div class="branding">
+        <img src="logo.png" alt="Logo" title="Cloud IP Checker"
+          class="logo" />
+        <h1>Cloud IP Checker</h1>
+        <p>Find if an IP is part of an Azure Service Tag</a></p>
+      </div>
+    </header>
+    <main id="app">
+      <router-view></router-view>
+    </main>
+  </div>
+
+  <template id="prefix-list">
+    <div>
+      <div class="form-group">
+        <label for="ipAddress">Enter IP Address</label>
+        <input type="text" id="ipAddress" class="form-control" v-model="apiData.ipAddress">
+      </div>
+        <div>
+          <label for="manual">
+            <input type="radio" id="manual" value="manual" v-model="apiData.source"> Web JSON
+          </label>
+          <label for="api">
+            <input type="radio" id="api" value="api" v-model="apiData.source"> Service Tag API
+          </label>
+          <p><i>The Service Tag API is in preview and may present less data than the Web JSON</i></p>
+        </div>
+      <div class="row">
+        <div>
+          <button class="btn btn-primary" @click.prevent="submitted">Submit!
+          </button>
+        </div>
+      </div>
+      <div class="col-sm-10">
+        <p class="error" v-if="errors.response">{{ errors.response }}</p>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Region</th>
+            <th>Prefix</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="prefix in prefixes">
+            <td>
+              {{ prefix.Service }}
+            </td>
+            <td>{{ prefix.Region }}</td>
+            <td>
+              {{ prefix.AddressPrefix }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </template>
+</body>
+<script>
+  var List = Vue.extend({
+    template: '#prefix-list',
+    data: function () {
+      return {
+        prefixes: [],
+        apiData: {
+          ipAddress: '',
+          source: 'manual'
+        },
+        errors: {
+          response: ''
+        }
+      }
+    },
+    methods: {
+      submitted() {
+        const url = `${API_URL}/${this.apiData.source}?ip=${this.apiData.ipAddress}`;
+        axios.get(url)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            //console.log(response.data.Values)
+            if (response.data.Status == 200) {
+              this.errors.response = ""
+              this.prefixes = response.data.Values
+              this.prefixes.forEach(fillEmptyData)
+              function fillEmptyData(item) {
+                if (item.Service == "") {
+                  item.Service = "N/A"
+                }
+                if (item.Region == "") {
+                  item.Region = "N/A"
+                }
+              }
+            }  else if (response.data.Status == 400) {
+                this.errors.response = "An IP address is required. Please enter an IP address to lookup"
+              } else {
+                if (this.apiData.source == 'manual') {
+                  this.errors.response = "This IP address was not found in the Azure Service Tag Web JSON data."
+                } else {
+                  this.errors.response = "This IP address was not found in the Azure Service Tag API data. Note, the Web JSON option has more data, you may wish to try there too"
+                }
+                
+              }
+          })
+          .catch(e => {
+            console.log(e)
+          })
+      }
+
+    }
+  });
+
+  var router = new VueRouter({
+    routes: [
+      { path: '/', component: List },
+    ]
+  });
+  app = new Vue({
+    router: router
+  }).$mount('#app')
+</script>
+<style>
+  .logo {
+    width: 75px;
+    float: left;
+    margin-right: 15px;
+  }
+
+  .headshot {
+    width: 150px;
+    height: 175px;
+    float: left;
+    margin-right: 15px;
+  }
+
+  .form-group {
+    max-width: 500px;
+  }
+
+  .actions {
+    padding: 10px 0;
+  }
+
+  .glyphicon-euro {
+    font-size: 12px;
+  }
+
+  .error {
+    color: red
+  }
+</style>
+
+</html>

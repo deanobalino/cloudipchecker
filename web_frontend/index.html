@@ -114,11 +114,14 @@
                 }
               }
             }  else if (response.data.Status == 400) {
+                this.prefixes = ""
                 this.errors.response = "An IP address is required. Please enter an IP address to lookup"
               } else {
                 if (this.apiData.source == 'manual') {
+                  this.prefixes = ""
                   this.errors.response = "This IP address was not found in the Azure Service Tag Web JSON data."
                 } else {
+                  this.prefixes = ""
                   this.errors.response = "This IP address was not found in the Azure Service Tag API data. Note, the Web JSON option has more data, you may wish to try there too"
                 }
                 

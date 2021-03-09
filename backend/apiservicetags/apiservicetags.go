@@ -21,32 +21,27 @@ type serviceTagDetail struct {
 }
 
 type correctRes struct {
-	Status int `json:Status"`
-	Values interface {} //`json:"Values"`
+	Status int         `json:Status"`
+	Values interface{} //`json:"Values"`
 }
 
 type errorRes struct {
-	Status int `json:Status"`
-	Error string `json:Error"`
+	Status int    `json:Status"`
+	Error  string `json:Error"`
 }
 
 type allServiceTagDetails []serviceTagDetail
 
 var serviceTagDetails = allServiceTagDetails{}
 
-
 var (
-	
 	location = "westeurope"
-	//ipAddress = "1.1.1.1"
-	//ipAddress = "13.77.53.49"
 )
-
-
 
 // Initialize Azure Auth
 func AzureAuth() autorest.Authorizer {
 	auth, err := auth.NewAuthorizerFromEnvironment()
+	//auth, err := auth.NewAuthorizerFromCLI()
 	if err != nil {
 		log.Println("There was an error authenticating with the Azure CLI credentials")
 		panic(err)
@@ -56,8 +51,8 @@ func AzureAuth() autorest.Authorizer {
 
 //GetServiceTags from Azure API
 func GetServiceTagsFromAPI(subID string, location string, ipAddress string) {
-		// establish a service tags client
-	
+	// establish a service tags client
+
 	serviceTagClient := network.NewServiceTagsClient(subID)
 	//check if auth is detected
 	if AzureAuth() == nil {
@@ -92,7 +87,7 @@ func GetServiceTagsFromAPI(subID string, location string, ipAddress string) {
 					newServiceTag.Service = *value.Properties.SystemService
 					newServiceTag.AddressPrefix = prefix
 					serviceTagDetails = append(serviceTagDetails, newServiceTag)
-				} 
+				}
 			}
 		}
 	}
@@ -106,7 +101,7 @@ func GetServiceTags(w http.ResponseWriter, r *http.Request) {
 		GetServiceTagsFromAPI(subID, location, ipAddress)
 		if len(serviceTagDetails) > 0 {
 			//json.NewEncoder(w).Encode(serviceTagDetails)
-			var response correctRes 
+			var response correctRes
 			response.Status = 200
 			response.Values = serviceTagDetails
 			resJSON, _ := json.MarshalIndent(response, "", "    ")
@@ -116,7 +111,7 @@ func GetServiceTags(w http.ResponseWriter, r *http.Request) {
 			ReturnError(404, "IP Address not found in Azure Service Tag data returned from the Service Tag API. Try '/api/servicetags/manual?ip=' which may have more data", w, r)
 		}
 	} else {
-		ReturnError(400, "Please pass in an 'ip' query parameter to search for an IP",w ,r)
+		ReturnError(400, "Please pass in an 'ip' query parameter to search for an IP", w, r)
 	}
 }
 
@@ -126,4 +121,4 @@ func ReturnError(status int, message string, w http.ResponseWriter, r *http.Requ
 	errorResponse.Error = message
 	resJSON, _ := json.MarshalIndent(errorResponse, "", "    ")
 	fmt.Fprintf(w, string(resJSON))
-} 
+}

@@ -112,6 +112,18 @@ The CLI Utility has it's own repository - [Cloud IP Checker CLI](https://github.
 
 You will find installation and usage details there. 
 
+## TODO
+Some ideas for future enhancements
+
+* Add support for domain names as well as ip addresses
+* Add a `--service` option to search for an Azure service and retrieve the associated prefixes
+* Add a `--region` option to search for an Azure region and retrieve the associated prefixes
+
+## Credits
+
+Created with ❤️ by Dean Bryen  
+💡 Inspiration from Adam Stuart and James Complin
+
 
 
 

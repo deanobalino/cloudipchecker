@@ -81,9 +81,38 @@ This tool is pretty self explanatory.
 * Click Submit and the results will be displayed to you
 
 ## CLI
-If you wish to use this tool as part of your build process or in another automated way, it may be best to have a simple CLI utility that you can use to search for IP addresses. 
+If you wish to use this tool as part of your build process or in another automated way, it may be best to have a simple CLI utility that you can use to search for IP addresses. Such as:
 
-This utility is a current work in progress and I will be releasing it ASAP. 
+```
+▶ cloudipchecker get --ip 13.72.105.31
+Performing ip lookup for: 13.72.105.31 using data source: webjson
+{
+    "Status": 200,
+    "Values": [
+        {
+            "Region": "",
+            "Service": "AzureAdvancedThreatProtection",
+            "AddressPrefix": "13.72.105.31/32"
+        },
+        {
+            "Region": "eastus",
+            "Service": "",
+            "AddressPrefix": "13.72.64.0/18"
+        },
+        {
+            "Region": "",
+            "Service": "",
+            "AddressPrefix": "13.72.64.0/18"
+        }
+    ]
+}
+```
+
+The CLI Utility has it's own repository - [Cloud IP Checker CLI](https://github.com/deanobalino/cloudipchecker-cli).
+
+You will find installation and usage details there. 
+
+
 
 
 

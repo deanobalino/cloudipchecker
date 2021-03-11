@@ -1,4 +1,4 @@
-module github.com/deanobalino/cloud_ip_checker
+module github.com/deanobalino/cloudipchecker/backend
 
 go 1.15
 
@@ -15,8 +15,6 @@ require (
 	github.com/gorilla/mux v1.8.0 // indirect
 )
 
-replace github.com/deanobalino/cloud_ip_checker/apiservicetags => ./apiservicetags
+replace github.com/deanobalino/cloudipchecker/backend/apiservicetags => ./apiservicetags
 
-replace github.com/deanobalino/cloud_ip_checker/webservicetags => ./webservicetags
-
-replace github.com/deanobalino/cloud_ip_checker/manualservicetags => ./manualservicetags
+replace github.com/deanobalino/cloudipchecker/backend/webservicetags => ./webservicetags

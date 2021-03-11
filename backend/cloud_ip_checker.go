@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/deanobalino/cloud_ip_checker/apiservicetags"
-	"github.com/deanobalino/cloud_ip_checker/webservicetags"
+	"github.com/deanobalino/cloudipchecker/backend/apiservicetags"
+	"github.com/deanobalino/cloudipchecker/backend/webservicetags"
 )
 
 func main() {

@@ -16,9 +16,9 @@ The API is ready for you to use and is hosted in Azure. It takes an ip address a
 
 An example URI is: [https://cloudipchecker.azurewebsites.net/api/servicetags/manual?ip=13.86.98.0](https://cloudipchecker.azurewebsites.net/api/servicetags/manual?ip=13.86.98.0)
 
-By default the API searches the downloaded [JSON file](https://www.microsoft.com/en-us/download/details.aspx?id=56519) that is available on the Azure Website to manually download. 
+By default the API searches the downloaded [JSON file](https://www.microsoft.com/download/details.aspx?id=56519&WT.mc_id=devops-0000-debryen) that is available on the Azure Website to manually download. 
 
-If you wish to query to [Azure Service Tag API](https://docs.microsoft.com/en-us/rest/api/virtualnetwork/servicetags/list) instead, then you will need to change the URI, replacing `manual` with `api`
+If you wish to query to [Azure Service Tag API](https://docs.microsoft.com/rest/api/virtualnetwork/servicetags/list?WT.mc_id=devops-0000-debryen) instead, then you will need to change the URI, replacing `manual` with `api`
 
 An example URI for this is: [https://cloudipchecker.azurewebsites.net/api/servicetags/api?ip=13.86.98.0](https://cloudipchecker.azurewebsites.net/api/servicetags/api?ip=13.86.98.0)
 
@@ -56,7 +56,7 @@ The API code can be found in the **/backend** directory in this repository. It i
 
 You will need to set an Application Setting of `SUBSCRIPTION_ID` and give this your Azure subscription ID as a value. 
 
-Then it should be as simple as deploying to Azure. I recommend using the [Azure Functions Extension for VSCode](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions#:~:text=Azure%20Functions%20for%20Visual%20Studio%20Code%20Use%20the,Azure%20serverless%20community%20library%20to%20view%20sample%20projects.) to do this. 
+Then it should be as simple as deploying to Azure. I recommend using the [Azure Functions Extension for VSCode](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions&WT.mc_id=devops-0000-debryen#:~:text=Azure Functions for Visual Studio Code Use the,Azure serverless community library to view sample projects.) to do this. 
 
 Once deployed to Azure, you need to assign a Managed Identity to your Azure Functions with permissions to access to VNET Service Tag API. 
 
